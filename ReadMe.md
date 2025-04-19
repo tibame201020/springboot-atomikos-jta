@@ -41,7 +41,7 @@ public PlatformTransactionManager transactionManager() throws Throwable {
 
 ---
 
-## ✅ EntityManagerFactory 設定（通用）
+## EntityManagerFactory 設定（通用）
 
 必須設定 `.jta(true)` 以啟用 JTA 模式。
 

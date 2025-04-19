@@ -1,6 +1,6 @@
-# Spring Boot 2 + EclipseLink + Atomikos + JTA integration guide
+# Spring Boot 2 + EclipseLink + Atomikos + JTA
 
-## Dependencies
+## ✅Dependencies
 ```xml
 <dependency>
     <groupId>com.atomikos</groupId>
@@ -27,7 +27,7 @@
 </dependency>
 ```
 
-## Entity Manager 設定：jta(true)
+## ✅Entity Manager 設定：jta(true)
 ```java
 return entityManagerFactoryBuilder
         .dataSource(dataSource)
@@ -38,7 +38,7 @@ return entityManagerFactoryBuilder
         .build();
 ```
 
-## JPA Vendor Adapter 設定
+## ✅JPA Vendor Adapter 設定
 > `props.put("eclipselink.target-server", "com.atomikos.eclipselink.platform.AtomikosPlatform");`
 ```java
 @Bean
@@ -56,7 +56,7 @@ public EntityManagerFactoryBuilder entityManagerFactoryBuilder() {
 }
 ```
 
-## JTA Transaction Beans 設定
+## ✅JTA Transaction Beans 設定
 ```java
 @Bean
 public UserTransaction userTransaction() throws Throwable {

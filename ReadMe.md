@@ -1,23 +1,23 @@
 #### dependencies
 ```
-		<dependency>
-			<groupId>com.atomikos</groupId>
-			<artifactId>transactions-spring-boot3</artifactId>
-            <version>6.0.0</version>
-		</dependency>
+<dependency>
+  <groupId>com.atomikos</groupId>
+  <artifactId>transactions-spring-boot3</artifactId>
+  <version>6.0.0</version>
+</dependency>
 
-        <dependency>
-            <groupId>com.atomikos</groupId>
-            <artifactId>transactions-jdbc</artifactId>
-            <version>6.0.0</version>
-        </dependency>
+<dependency>
+  <groupId>com.atomikos</groupId>
+  <artifactId>transactions-jdbc</artifactId>
+  <version>6.0.0</version>
+</dependency>
 ```
 ```
-        <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>eclipselink</artifactId>
-            <version>4.0.3</version>
-        </dependency>
+<dependency>
+  <groupId>org.eclipse.persistence</groupId>
+  <artifactId>eclipselink</artifactId>
+  <version>4.0.3</version>
+</dependency>
 ```
 
 #### entity manager: jta(true)

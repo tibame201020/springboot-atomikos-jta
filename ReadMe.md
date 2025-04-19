@@ -1,10 +1,10 @@
 #### dependencies
 ```
         <dependency>
-			<groupId>com.atomikos</groupId>
-			<artifactId>transactions-spring-boot3</artifactId>
-            <version>6.0.0</version>
-		</dependency>
+	    <groupId>com.atomikos</groupId>
+	    <artifactId>transactions-spring-boot3</artifactId>
+	    <version>6.0.0</version>
+	</dependency>
 
         <dependency>
             <groupId>com.atomikos</groupId>

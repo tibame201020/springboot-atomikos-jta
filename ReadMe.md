@@ -1,51 +1,53 @@
-#### dependencies
-```
-        <dependency>
-	    <groupId>com.atomikos</groupId>
-            <artifactId>transactions-jta</artifactId>
-            <version>4.0.6</version>
-	</dependency>
+# Spring Boot 2 + Hibernate + Atomikos JTA
 
-        <dependency>
-            <groupId>com.atomikos</groupId>
-            <artifactId>transactions-jdbc</artifactId>
-            <version>4.0.6</version>
-        </dependency>
-```
+## Dependencies
+```xml
+<dependency>
+    <groupId>com.atomikos</groupId>
+    <artifactId>transactions-jta</artifactId>
+    <version>4.0.6</version>
+</dependency>
 
-#### entity manager: jta(true)
-```
-        return entityManagerFactoryBuilder
-                .dataSource(dataSource)
-                .properties(properties)
-                .jta(true)
-                .persistenceUnit(persistenceUnit)
-                .packages(packages)
-                .build();
+<dependency>
+    <groupId>com.atomikos</groupId>
+    <artifactId>transactions-jdbc</artifactId>
+    <version>4.0.6</version>
+</dependency>
 ```
 
-####  jta transaction beans
+## Entity Manager Configuration (`jta(true)`)
+```java
+return entityManagerFactoryBuilder
+        .dataSource(dataSource)
+        .properties(properties)
+        .jta(true)
+        .persistenceUnit(persistenceUnit)
+        .packages(packages)
+        .build();
 ```
-    @Bean
-    public UserTransaction userTransaction() throws Throwable {
-        UserTransactionImp userTransactionImp = new UserTransactionImp();
-        userTransactionImp.setTransactionTimeout(10000);
-        return userTransactionImp;
-    }
 
-    @Bean
-    public TransactionManager atomikosTransactionManager() {
-        UserTransactionManager userTransactionManager = new UserTransactionManager();
-        userTransactionManager.setForceShutdown(false);
+## JTA Transaction Beans
+```java
+@Bean
+public UserTransaction userTransaction() throws Throwable {
+    UserTransactionImp userTransactionImp = new UserTransactionImp();
+    userTransactionImp.setTransactionTimeout(10000);
+    return userTransactionImp;
+}
 
-        return userTransactionManager;
-    }
+@Bean
+public TransactionManager atomikosTransactionManager() {
+    UserTransactionManager userTransactionManager = new UserTransactionManager();
+    userTransactionManager.setForceShutdown(false);
 
-    @Bean
-    public PlatformTransactionManager transactionManager() throws Throwable {
-        UserTransaction userTransaction = userTransaction();
+    return userTransactionManager;
+}
 
-        TransactionManager atomikosTransactionManager = atomikosTransactionManager();
-        return new JtaTransactionManager(userTransaction, atomikosTransactionManager);
-    }
+@Bean
+public PlatformTransactionManager transactionManager() throws Throwable {
+    UserTransaction userTransaction = userTransaction();
+
+    TransactionManager atomikosTransactionManager = atomikosTransactionManager();
+    return new JtaTransactionManager(userTransaction, atomikosTransactionManager);
+}
 ```

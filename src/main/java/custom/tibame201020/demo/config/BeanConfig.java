@@ -2,14 +2,13 @@ package custom.tibame201020.demo.config;
 
 import com.atomikos.icatch.jta.UserTransactionImp;
 import com.atomikos.icatch.jta.UserTransactionManager;
-import javax.transaction.TransactionManager;
-import javax.transaction.UserTransaction;
-
+import custom.tibame201020.demo.config.platorm.CustomAtomikosPlatform;
+import jakarta.transaction.TransactionManager;
+import jakarta.transaction.UserTransaction;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
@@ -24,7 +23,7 @@ public class BeanConfig {
     public EntityManagerFactoryBuilder entityManagerFactoryBuilder() {
         EclipseLinkJpaVendorAdapter jpaVendorAdapter = new EclipseLinkJpaVendorAdapter();
         Map<String, Object> props = new HashMap<>();
-        props.put("eclipselink.target-server", "com.atomikos.eclipselink.platform.AtomikosPlatform");
+        props.put("eclipselink.target-server", CustomAtomikosPlatform.class.getName());
         props.put("eclipselink.weaving", "false");
         props.put("eclipselink.ddl-generation", "create-tables");
         return new EntityManagerFactoryBuilder(

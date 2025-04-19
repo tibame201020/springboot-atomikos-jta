@@ -2,6 +2,16 @@
 # Spring Boot + Atomikos JTA 整合指南
 ---
 
+## 🧾 總覽
+
+| 組合 | Atomikos 依賴 | 特殊設定 | 其他備註 |
+|------|----------------|----------|----------|
+| Spring Boot 2 + Hibernate | `transactions-jta`, transactions-jdbc | none | 無 |
+| Spring Boot 3 + Hibernate | `transactions-spring-boot3`, transactions-jdbc | `atomikos依賴版本` | 注意 API 變更 |
+| Spring Boot 2 + EclipseLink | `transactions-jta`, transactions-jdbc, `transactions-eclipselink` | 指定 `eclipselink.target-server` 為 AtomikosPlatform | 原生支援 |
+| Spring Boot 3 + EclipseLink | `transactions-spring-boot3`, transactions-jdbc | `自行實作 CustomAtomikosPlatform` | transactions-eclipselink 不相容 |
+---
+
 ## 🔧 共通設定項目
 
 ### JTA Transaction Beans（通用）
@@ -27,6 +37,26 @@ public PlatformTransactionManager transactionManager() throws Throwable {
     TransactionManager atomikosTransactionManager = atomikosTransactionManager();
     return new JtaTransactionManager(userTransaction, atomikosTransactionManager);
 }
+```
+
+---
+
+## ✅ EntityManagerFactory 設定（通用）
+
+必須設定 `.jta(true)` 以啟用 JTA 模式。
+
+```java
+    public LocalContainerEntityManagerFactoryBean generateEntityManager(DataSource dataSource, String persistenceUnit, String... packages) {
+        HashMap<String, Object> properties = new HashMap<>();
+
+        return entityManagerFactoryBuilder
+                .dataSource(dataSource)
+                .properties(properties)
+                .jta(true)
+                .persistenceUnit(persistenceUnit)
+                .packages(packages)
+                .build();
+    }
 ```
 
 ---
@@ -72,29 +102,15 @@ public PlatformTransactionManager transactionManager() throws Throwable {
   <version>6.0.0</version>
 </dependency>
 ```
-
 ---
 
 ## ✅ EclipseLink 組合設定
-
-### EntityManagerFactory 設定（共同）
-
-```java
-return entityManagerFactoryBuilder
-        .dataSource(dataSource)
-        .properties(properties)
-        .jta(true)
-        .persistenceUnit(persistenceUnit)
-        .packages(packages)
-        .build();
-```
-
 ### Spring Boot 2 + EclipseLink + Atomikos
 
 - 必須指定 `eclipselink.target-server`
 
 #### jpaVendorAdapter
-
+- `AtomikosPlatform` from `com.atomikos:transactions-eclipselink`
 ```java
 EclipseLinkJpaVendorAdapter jpaVendorAdapter = new EclipseLinkJpaVendorAdapter();
 Map<String, Object> props = new HashMap<>();
@@ -173,4 +189,5 @@ props.put("eclipselink.target-server", CustomAtomikosPlatform.class.getName());
 | JTA 設定 | `.jta(true)` 必須設於 `EntityManagerFactoryBuilder` |
 | AtomikosPlatform | Spring Boot 3 + EclipseLink 請改用自定義版本 |
 | Jakarta 轉移 | Spring Boot 3 開始皆需使用 `jakarta.transaction` |
-| transactions-eclipselink | 僅支援 Spring Boot 2，Spring Boot 3 需自行實作 |
+| transactions-eclipselink | 僅支援 Spring Boot 2，`Spring Boot 3 需自行實作` |
+

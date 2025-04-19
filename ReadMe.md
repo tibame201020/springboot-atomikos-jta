@@ -1,10 +1,10 @@
 #### dependencies
 ```
         <dependency>
-			<groupId>com.atomikos</groupId>
-			<artifactId>transactions-jta</artifactId>
+	    <groupId>com.atomikos</groupId>
+	    <artifactId>transactions-jta</artifactId>
             <version>4.0.6</version>
-		</dependency>
+	</dependency>
 
         <dependency>
             <groupId>com.atomikos</groupId>

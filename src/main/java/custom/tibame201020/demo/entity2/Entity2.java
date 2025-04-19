@@ -1,6 +1,6 @@
 package custom.tibame201020.demo.entity2;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "entity2")

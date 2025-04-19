@@ -1,6 +1,6 @@
 # Spring Boot 2 + Hibernate + Atomikos JTA
 
-## Dependencies
+## ✅Dependencies
 ```xml
 <dependency>
     <groupId>com.atomikos</groupId>
@@ -15,7 +15,7 @@
 </dependency>
 ```
 
-## Entity Manager Configuration (`jta(true)`)
+## ✅Entity Manager Configuration (`jta(true)`)
 ```java
 return entityManagerFactoryBuilder
         .dataSource(dataSource)
@@ -26,7 +26,7 @@ return entityManagerFactoryBuilder
         .build();
 ```
 
-## JTA Transaction Beans
+## ✅JTA Transaction Beans
 ```java
 @Bean
 public UserTransaction userTransaction() throws Throwable {

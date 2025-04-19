@@ -21,6 +21,7 @@
     <properties>
         <java.version>1.8</java.version>
         <atomikos.version>4.0.6</atomikos.version>
+        <eclipselink.version>2.7.10</eclipselink.version>
     </properties>
 
     <dependencies>
@@ -48,9 +49,21 @@
         </dependency>
 
         <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-eclipselink</artifactId>
+            <version>${atomikos.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>${eclipselink.version}</version>
         </dependency>
 
     </dependencies>

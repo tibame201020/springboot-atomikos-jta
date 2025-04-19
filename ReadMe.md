@@ -11,6 +11,19 @@
             <artifactId>transactions-jdbc</artifactId>
             <version>4.0.6</version>
         </dependency>
+        
+        <dependency>
+            <groupId>com.atomikos</groupId>
+            <artifactId>transactions-eclipselink</artifactId>
+            <version>4.0.6</version>
+        </dependency>
+```
+```
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>2.7.10</version>
+        </dependency>
 ```
 
 #### entity manager: jta(true)
@@ -22,6 +35,23 @@
                 .persistenceUnit(persistenceUnit)
                 .packages(packages)
                 .build();
+```
+#### jpa vendor adapter: 
+###### props.put("eclipselink.target-server", "com.atomikos.eclipselink.platform.AtomikosPlatform");
+```
+    @Bean
+    public EntityManagerFactoryBuilder entityManagerFactoryBuilder() {
+        EclipseLinkJpaVendorAdapter jpaVendorAdapter = new EclipseLinkJpaVendorAdapter();
+        Map<String, Object> props = new HashMap<>();
+        props.put("eclipselink.target-server", "com.atomikos.eclipselink.platform.AtomikosPlatform");
+        props.put("eclipselink.weaving", "false");
+        props.put("eclipselink.ddl-generation", "create-tables");
+        return new EntityManagerFactoryBuilder(
+                jpaVendorAdapter,
+                props,
+                null
+        );
+    }
 ```
 
 ####  jta transaction beans

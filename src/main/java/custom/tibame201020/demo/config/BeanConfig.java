@@ -8,6 +8,7 @@ import javax.transaction.UserTransaction;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.jta.JtaTransactionManager;
@@ -21,9 +22,11 @@ public class BeanConfig {
 
     @Bean
     public EntityManagerFactoryBuilder entityManagerFactoryBuilder() {
-        HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+        EclipseLinkJpaVendorAdapter jpaVendorAdapter = new EclipseLinkJpaVendorAdapter();
         Map<String, Object> props = new HashMap<>();
-
+        props.put("eclipselink.target-server", "com.atomikos.eclipselink.platform.AtomikosPlatform");
+        props.put("eclipselink.weaving", "false");
+        props.put("eclipselink.ddl-generation", "create-tables");
         return new EntityManagerFactoryBuilder(
                 jpaVendorAdapter,
                 props,
